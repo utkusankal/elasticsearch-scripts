@@ -29,12 +29,15 @@ do
     	fi
 done
 var= ${array[id-1]}
-echo $var
+#echo $var
+#echo ${array[id-1]}
+#echo ${array[id-1]%.*}
+ 
 
 
-
-
+#rm -r /dati/elasticsearch/snapshots/*
 cd /dati/snap_zip
+
 unzip ${array[id-1]} -d /dati/elasticsearch/snapshots/ 
 
 
@@ -43,7 +46,7 @@ cp -R snapshots/* .
 rm -rf snapshots/
 cd ..
 chown -R elasticsearch:elasticsearch snapshots/
-curl -XPOST -u admin:admin  https://localhost:9200/_snapshot/$var/$var/_restore --insecure
+curl -XPOST -u admin:admin  https://localhost:9200/_snapshot/${array[id-1]%.*}/${array[id-1]%.*}/_restore --insecure
 
 
 
